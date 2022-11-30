@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
+
 @api_view(['GET', 'POST'])
 def tramite_list(request):
     """
@@ -11,10 +12,20 @@ def tramite_list(request):
     GET: Guarda nuevas entradas del modelo Tramites.
     """
     if request.method == 'GET':
+        # Recupera todos los elementos de la BD
         tramites = Tramite.objects.all()
+        # Serializa la lista a Json
         serializer = TramtiteSerializer(tramites, many=True)
-        return Response({"tramites": serializer.data}, status=status.HTTP_200_OK)
-    
+        return Response({"tramites": serializer.data})
+    elif request.method == 'POST':
+        # Crea un objeto apartir de los datos de la peticion
+        serializer = TramtiteSerializer(data=request.data)
+        if serializer.is_valid:
+            # Guarda el elemento validado en la BD
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
 @api_view(['GET', 'PUT', 'DELETE'])
 def tramite_detail(request, id):
     """
@@ -26,7 +37,7 @@ def tramite_detail(request, id):
         tramite = Tramite.objects.get(pk=id)
     except Tramite.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-    
+
     if request.method == 'GET':
         serializer = TramtiteSerializer(tramite)
         return Response(serializer.data)
