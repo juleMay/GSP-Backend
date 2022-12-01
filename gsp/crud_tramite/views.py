@@ -51,4 +51,7 @@ def tramite_detail(request, id):
             serializer.save
             return Response(serializer)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
+    elif request.methos == 'DELETE':
+        # Elimina el Tramite con el id de la peticion de la BD
+        tramite.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
