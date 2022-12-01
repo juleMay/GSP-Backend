@@ -15,11 +15,11 @@ def tramite_list(request):
         # Recupera todos los elementos de la BD
         tramites = Tramite.objects.all()
         # Serializa la lista a Json
-        serializer = TramtiteSerializer(tramites, many=True)
+        serializer = TramiteSerializer(tramites, many=True)
         return Response({"tramites": serializer.data})
     elif request.method == 'POST':
-        # Crea un objeto apartir de los datos de la peticion
-        serializer = TramtiteSerializer(data=request.data)
+        # Crea un objeto de tipo Tramite apartir de los datos de la peticion
+        serializer = TramiteSerializer(data=request.data)
         if serializer.is_valid:
             # Guarda el elemento validado en la BD
             serializer.save()
@@ -34,10 +34,21 @@ def tramite_detail(request, id):
     DELETE: Elimina un individuo del modelo Tramites con pk = id.
     """
     try:
+        # Intenta buscar el Tramite con el id de la peticion
         tramite = Tramite.objects.get(pk=id)
     except Tramite.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = TramtiteSerializer(tramite)
+        # Serializa el elemento de Tramite en formato Json
+        serializer = TramiteSerializer(tramite)
         return Response(serializer.data)
+    elif request.method == 'PUT':
+        # Modifica el Tramite a partir de los datos de la peticion
+        serializer = TramiteSerializer(tramite, data=request.data)
+        if serializer.is_valid:
+            # Guarde el Tramite modificado en la BD
+            serializer.save
+            return Response(serializer)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        

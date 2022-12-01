@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import Tramite
 
 
-class TramtiteSerializer(serializers.ModelSerializer):
+class TramiteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tramite
         fields = ['id', 'numero_ventanilla', 'tipo_tramite', 'asunto_tramite', 'medio_recepcion', 'fecha_recepcion', 'fecha_vencimiento', 'numero_oficio', 'oficio_respuesta',
