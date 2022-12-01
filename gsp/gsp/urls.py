@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path,include
 import crud_tramite.views
 import crud_tramitante.views
+import crud_traslado.views
 
 urlpatterns = [
     path('admin/doc/', include('django.contrib.admindocs.urls')),
@@ -25,4 +26,6 @@ urlpatterns = [
     path('tramites/<int:id>', crud_tramite.views.tramite_detail),
     path('tramitantes/', crud_tramitante.views.tramitante_list),
     path('tramitantes/<int:id>', crud_tramitante.views.tramitante_detail),
+    path('traslados/', crud_traslado.views.traslado_list),
+    path('traslados/<int:id>', crud_traslado.views.traslado_detail),
 ]
