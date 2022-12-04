@@ -20,7 +20,7 @@ def tramite_list(request):
     elif request.method == 'POST':
         # Crea un objeto de tipo Tramite apartir de los datos de la peticion
         serializer = TramiteSerializer(data=request.data)
-        if serializer.is_valid:
+        if serializer.is_valid():
             # Guarda el elemento validado en la BD
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -46,12 +46,12 @@ def tramite_detail(request, id):
     elif request.method == 'PUT':
         # Modifica el Tramite a partir de los datos de la peticion
         serializer = TramiteSerializer(tramite, data=request.data)
-        if serializer.is_valid:
+        if serializer.is_valid():
             # Guarde el Tramite modificado en la BD
-            serializer.save
-            return Response(serializer)
+            serializer.save()
+            return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    elif request.methos == 'DELETE':
+    elif request.method == 'DELETE':
         # Elimina el Tramite con el id de la peticion de la BD
         tramite.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
