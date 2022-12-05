@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.admindocs',
     'rest_framework',
     'crud_tramite',
+    'crud_tramitante',
 ]
 
 MIDDLEWARE = [
