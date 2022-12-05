@@ -3,7 +3,22 @@ from .models import Tramite
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from datetime import datetime, timedelta
+from api_configuracion.models import Configuracion
 
+def get_vencimiento (tipo_tramite, fecha_inicial):
+    configuracion = Configuracion.objects.get(tipo_configuracion=tipo_tramite)
+    dias_por_sumar = configuracion.tiempo_limite
+    fecha_actual = fecha_inicial
+    while dias_por_sumar > 0:
+        fecha_actual += timedelta(days=1)
+        dia_actual = fecha_actual.weekday()
+        if dia_actual >= 5:
+            continue
+        dias_por_sumar -= 1
+    return fecha_actual
+
+    
 
 @api_view(['GET', 'POST'])
 def tramite_list(request):
@@ -16,11 +31,16 @@ def tramite_list(request):
         tramites = Tramite.objects.all()
         # Serializa la lista a Json
         serializer = TramiteSerializer(tramites, many=True)
+        
         return Response({"tramites": serializer.data})
     elif request.method == 'POST':
         # Crea un objeto de tipo Tramite apartir de los datos de la peticion
         serializer = TramiteSerializer(data=request.data)
         if serializer.is_valid():
+            tipo_tramite = serializer.validated_data['tipo_tramite']
+            fecha_inicial = serializer.validated_data['fecha_recepcion']
+            serializer.validated_data['fecha_vencimiento'] = get_vencimiento(tipo_tramite,fecha_inicial)
+            print(serializer.validated_data['fecha_vencimiento'])
             # Guarda el elemento validado en la BD
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

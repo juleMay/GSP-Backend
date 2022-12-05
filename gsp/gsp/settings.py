@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'crud_tramite',
     'crud_tramitante',
     'crud_traslado',
+    'api_configuracion',
 ]
 
 MIDDLEWARE = [
