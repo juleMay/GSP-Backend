@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'crud_tramite',
     'crud_tramitante',
+    'crud_traslado',
 ]
 
 MIDDLEWARE = [
