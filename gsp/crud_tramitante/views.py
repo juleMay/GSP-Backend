@@ -19,7 +19,7 @@ def tramitante_list(request):
     elif request.method == 'POST':
         # Crea un objeto de tipo Tramitante apartir de los datos de la peticion
         serializer = TramitanteSerializer(data=request.data)
-        if serializer.is_valid:
+        if serializer.is_valid():
             # Guarda el elemento validado en la BD
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -45,12 +45,12 @@ def tramitante_detail(request, id):
     elif request.method == 'PUT':
         # Modifica el Tramitante a partir de los datos de la peticion
         serializer = TramitanteSerializer(tramitante, data=request.data)
-        if serializer.is_valid:
+        if serializer.is_valid():
             # Guarde el Tramitante modificado en la BD
-            serializer.save
-            return Response(serializer)
+            serializer.save()
+            return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    elif request.methos == 'DELETE':
+    elif request.method == 'DELETE':
         # Elimina el Tramitante con el id de la peticion de la BD
         tramitante.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

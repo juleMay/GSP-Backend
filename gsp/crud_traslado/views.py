@@ -20,7 +20,7 @@ def traslado_list(request):
     elif request.method == 'POST':
         # Crea un objeto de tipo Traslado apartir de los datos de la peticion
         serializer = TrasladoSerializer(data=request.data)
-        if serializer.is_valid:
+        if serializer.is_valid():
             # Guarda el elemento validado en la BD
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -46,12 +46,12 @@ def traslado_detail(request, id):
     elif request.method == 'PUT':
         # Modifica el Traslado a partir de los datos de la peticion
         serializer = TrasladoSerializer(traslado, data=request.data)
-        if serializer.is_valid:
+        if serializer.is_valid():
             # Guarde el Traslado modificado en la BD
-            serializer.save
-            return Response(serializer)
+            serializer.save()
+            return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    elif request.methos == 'DELETE':
+    elif request.method == 'DELETE':
         # Elimina el Traslado con el id de la peticion de la BD
         traslado.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
