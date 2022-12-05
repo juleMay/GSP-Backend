@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 @api_view(['GET'])
-def traslado_list(request):
+def config_list(request):
     """
     GET: Guarda nuevas entradas del modelo Configuraciones.
     """
@@ -25,7 +25,7 @@ def traslado_list(request):
 
 
 @api_view(['GET', 'PUT'])
-def traslado_detail(request, id):
+def config_detail(request, id):
     """
     GET: Retorna un individuo del modelo Configuraciones en formato Json con pk = id.
     PUT: Modifica un individuo del modelo Configuraciones con pk = id.
