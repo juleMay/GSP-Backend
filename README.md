@@ -69,4 +69,4 @@ tarea 2 ->> main: Integración
 Note right of tarea 2: Procure resolver conflictos<br/>antes de hacer un<br/>pull request.
 ```
 # Diagrama de Clases
-![Diagrama de Clases](https://user-images.githubusercontent.com/93263557/207206749-51927e09-9c85-4bc8-b8a6-edf784f0edb5.png)
+![Diagrama de Clases](https://user-images.githubusercontent.com/93263557/207209048-e689b899-c1f9-4797-a233-0b3bb6704f39.png)
