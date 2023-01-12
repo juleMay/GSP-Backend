@@ -24,7 +24,7 @@ O en **Windows**
 env\Scripts\activate
 ```
 ### Instale Django y Django REST framework
-Además de Django, se va a utilizar un framework para facilitar la creación de API REST en Django, **ambos frameworks** deben ser instalados en el **ambiente virtual**.
+Además de Django, se va a utilizar un framework para facilitar la creación de API REST en Django, **ambos frameworks** deben ser instalados en el **ambiente virtual** o de forma global en caso de nu utilizar en entorno virtual.
 
 Desde la consola del **ambiente virtual**
 ```
@@ -34,7 +34,10 @@ Luego
 ```
 pip install djangorestframework
 ```
-
+Finalmente la siguiente librería para habilitar peticiones desde dominios externos
+```
+pip install django-cors-headers
+```
 # Manejo de Versiones
 Para el manejo de versiones se decidió utilizar la estrategia de ramas de **GitHub Flow**, porque tanto el tamaño del equipo de desarrollo como el alcance del proyecto son pequeños.
 En conjunto con la metodología **Kanban**, se van a utilizar una rama por cada tarea, con el fin de mantener un bajo nivel de conflictos de integración.
