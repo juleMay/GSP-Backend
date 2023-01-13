@@ -37,7 +37,8 @@ pip install djangorestframework
 Finalmente, la siguiente librería para habilitar peticiones desde dominios externos
 ```
 pip install django-cors-headers
-```### Migraciones para la Base de Datos
+```
+### Migraciones para la Base de Datos
 Utilice el siguiente comando para crear las migraciones a partir de los **modelos** del proyecto. Este comando también se debe ejecutar cuando se realicen cambios en los modelos.
 Desde la consola en la raíz del proyecto
 ```
