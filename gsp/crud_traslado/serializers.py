@@ -6,3 +6,4 @@ class TrasladoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Traslado
         fields = ['id', 'fecha_traslado', 'id_tramite', 'id_tramitante']
+        depth = 2

@@ -4,6 +4,21 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
+@api_view(['GET'])
+def traslado_tramitante_list(request, id):
+    """
+    GET: Retorna la lista de elementos del modelo Traslados en formato Json.
+    """
+    try:
+        # Intenta buscar el Traslado con el id de la peticion
+        traslados = Traslado.objects.filter(id_tramite_id=id)
+    except Traslado.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if request.method == 'GET':
+        # Serializa la lista a Json
+        serializer = TrasladoSerializer(traslados, many=True)
+        return Response({"traslados": serializer.data})
 
 @api_view(['GET', 'POST'])
 def traslado_list(request):
