@@ -69,5 +69,5 @@ class Traslado(models.Model):
         return "TRASLADO ID:" + str(self.pk) + " {TRAMITE: " + str(self.id_tramite) + "} {TRAMITANTE: " + str(self.id_tramitante) + "}"
 
     fecha_traslado = models.DateField(auto_now=False, auto_now_add=False)
-    id_tramite = models.ForeignKey(Tramite, on_delete=models.CASCADE)
+    id_tramite = models.ForeignKey(Tramite, related_name='traslados', on_delete=models.CASCADE)
     id_tramitante = models.ForeignKey(Tramitante, on_delete=models.CASCADE)
