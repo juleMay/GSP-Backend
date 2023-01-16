@@ -25,7 +25,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('tramites/', crud_tramite.views.tramite_list),
     path('tramites/<int:id>', crud_tramite.views.tramite_detail),
-    path('tramites/tralados/<int:id>', crud_tramite.views.tramite_traslado_detail),
     path('tramitantes/', crud_tramitante.views.tramitante_list),
     path('tramitantes/<int:id>', crud_tramitante.views.tramitante_detail),
     path('traslados/', crud_traslado.views.traslado_list),
