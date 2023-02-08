@@ -24,7 +24,7 @@ urlpatterns = [
     path('admin/doc/', include('django.contrib.admindocs.urls')),
     path('admin/', admin.site.urls),
     path('tramites/<str:filtro>', crud_tramite.views.tramite_list),
-    path('tramites/<int:id>', crud_tramite.views.tramite_detail),
+    path('tramite/<int:id>', crud_tramite.views.tramite_detail),
     
     path('tramitantes/', crud_tramitante.views.tramitante_list),
     path('tramitantes/<int:id>', crud_tramitante.views.tramitante_detail),
