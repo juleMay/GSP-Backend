@@ -3,8 +3,10 @@ from .models import Tramite
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from datetime import datetime, timedelta
+from datetime import date, timedelta
 from api_configuracion.models import Configuracion
+from django.db.models import F
+import math
 
 def get_vencimiento (tipo_tramite, fecha_inicial):
     configuracion = Configuracion.objects.get(tipo_configuracion=tipo_tramite)
@@ -18,17 +20,31 @@ def get_vencimiento (tipo_tramite, fecha_inicial):
         dias_por_sumar -= 1
     return fecha_actual
 
+def filter_tramites(filtro):
+    fecha_actual = date.today()
+    tramites=[]
+    if (filtro == 'en-proceso'):
+        tramites = Tramite.objects.exclude(fecha_vencimiento__lte=fecha_actual).exclude(fecha_vencimiento__lte=fecha_actual+timedelta(days=5))        
+    elif(filtro == 'cerca-a-vencer'):
+        tramites = Tramite.objects.exclude(fecha_vencimiento__lte=fecha_actual).filter(fecha_vencimiento__lte=fecha_actual+timedelta(days=5))
+    elif(filtro == 'vencidos'):
+        tramites = Tramite.objects.filter(fecha_vencimiento__lte=fecha_actual)
+    return tramites
+
     
 
 @api_view(['GET', 'POST'])
-def tramite_list(request):
+def tramite_list(request, filtro):
     """
     POST: Retorna la lista de elementos del modelo Tramites en formato Json.
     GET: Guarda nuevas entradas del modelo Tramites.
     """
     if request.method == 'GET':
         # Recupera todos los elementos de la BD
-        tramites = Tramite.objects.all()
+        if (filtro!="todos"):
+            tramites = filter_tramites(filtro)
+        else:
+            tramites = Tramite.objects.all()
         # Serializa la lista a Json
         serializer = TramiteSerializer(tramites, many=True)
         
@@ -40,11 +56,9 @@ def tramite_list(request):
             tipo_tramite = serializer.validated_data['tipo_tramite']
             fecha_inicial = serializer.validated_data['fecha_recepcion']
             serializer.validated_data['fecha_vencimiento'] = get_vencimiento(tipo_tramite,fecha_inicial)
-            print(serializer.validated_data['fecha_vencimiento'])
             # Guarda el elemento validado en la BD
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def tramite_detail(request, id):
