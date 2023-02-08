@@ -23,13 +23,16 @@ import api_configuracion.views
 urlpatterns = [
     path('admin/doc/', include('django.contrib.admindocs.urls')),
     path('admin/', admin.site.urls),
-    path('tramites/', crud_tramite.views.tramite_list),
+    path('tramites/<str:filtro>', crud_tramite.views.tramite_list),
     path('tramites/<int:id>', crud_tramite.views.tramite_detail),
+    
     path('tramitantes/', crud_tramitante.views.tramitante_list),
     path('tramitantes/<int:id>', crud_tramitante.views.tramitante_detail),
+    
     path('traslados/', crud_traslado.views.traslado_list),
     path('traslados/<int:id>', crud_traslado.views.traslado_detail),
     path('traslados/tramite/<int:id>', crud_traslado.views.traslado_tramitante_list),
+    
     path('configs/', api_configuracion.views.config_list),
     path('configs/<int:id>', api_configuracion.views.config_detail),
     
