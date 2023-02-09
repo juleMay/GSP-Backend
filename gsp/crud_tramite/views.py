@@ -59,6 +59,8 @@ def tramite_list(request, filtro):
             # Guarda el elemento validado en la BD
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(status=status.HTTP_409_CONFLICT)
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def tramite_detail(request, id):
