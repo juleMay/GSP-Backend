@@ -34,17 +34,14 @@ def filter_tramites(filtro):
     
 
 @api_view(['GET', 'POST'])
-def tramite_list(request, filtro):
+def tramite_list(request):
     """
-    POST: Retorna la lista de elementos del modelo Tramites en formato Json.
-    GET: Guarda nuevas entradas del modelo Tramites.
+    GET: Retorna la lista de elementos del modelo Tramites en formato Json.
+    POST: Guarda nuevas entradas del modelo Tramites.
     """
     if request.method == 'GET':
         # Recupera todos los elementos de la BD
-        if (filtro!="todos"):
-            tramites = filter_tramites(filtro)
-        else:
-            tramites = Tramite.objects.all()
+        tramites = Tramite.objects.all()
         # Serializa la lista a Json
         serializer = TramiteSerializer(tramites, many=True)
         
@@ -61,6 +58,23 @@ def tramite_list(request, filtro):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(status=status.HTTP_409_CONFLICT)
+
+@api_view(['GET'])
+def tramite_filter(request, filtro):
+    """
+    GET: Obtiene los tramites filtrados.
+    """
+    if request.method == 'GET':
+        # Recupera todos los elementos de la BD
+        if (filtro!="todos"):
+            tramites = filter_tramites(filtro)
+        else:
+            tramites = Tramite.objects.all()
+        # Serializa la lista a Json
+        serializer = TramiteSerializer(tramites, many=True)
+        
+        return Response({"tramites": serializer.data})
+
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def tramite_detail(request, id):
